@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="css/reset.css">
     <link rel="stylesheet" type="text/css" href="css/iconfont.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="js/bootstrap/css/bootstrap.min.css">
 </head>
 
 <body>
@@ -23,13 +24,53 @@
             <form class="login_form">
                 <i class="iconfont icon-user"></i>
                 <i class="iconfont icon-key"></i>
-                <input type="text" class="input_txt" placeholder="邮箱/手机号">
-                <input type="password" class="input_pass" placeholder="密码">
-                <input type="submit" class="input_sub" value="登 录">
+                <input id="uName" type="text" class="input_txt" placeholder="邮箱/手机号">
+                <input id="uPassword" type="password" class="input_pass" placeholder="密码">
+                <input id="btn" type="button" class="input_sub" value="登 录">
             </form>
         </div>
 
-    </div> 
+    </div>
+    <div class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">信息框</h4>
+                </div>
+                <div class="modal-body">
+                    <p><i style="font-style: normal" id="utxt"></i>&hellip;</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <!-- <button type="button" class="btn btn-primary">确认</button> -->
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <script src="js/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/utils/userfouction.js"> </script>
+    <script>
+        $('#btn').click(function () {
+            var uName = $('#uName').val();
+            var uPassword = $('#uPassword').val();
+            if (uName == '' || uPassword == '') {
+                $('.modal').modal('show');
+                $('#utxt').text('用户名或密码不能为空');
+                return;
+            }
+            user.Login(uName, uPassword, function (str) {
+                if (str.code == 200) {
+                    window.location.href = './index.html';
+                } else {
+                    $('.modal').modal('show');
+                    $('#utxt').text('用户名或密码错误');
+                }
+            })
+        });
+    </script>
 
 </body>
 
